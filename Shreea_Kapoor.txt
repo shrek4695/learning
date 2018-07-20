@@ -1,0 +1,60 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    // Complete the hourglassSum function below.
+    static int hourglassSum(int[][] arr) {
+     int loop1,loop2,loop3,isum=0,sum_max=-63,array_size=6;
+        for(loop1=0;loop1<=array_size-3;loop1++)
+        {
+            for(loop2=0;loop2<=array_size-3;loop2++)
+            {
+                isum=0;
+                for(loop3=loop2;loop3<=loop2+2;loop3++)
+                {
+                    isum=isum+arr[loop1][loop3]+arr[loop1+2][loop3];                   
+                }
+                
+                isum=isum+arr[loop1+1][loop2+1];
+                
+                
+                if(isum>sum_max)
+                    sum_max=isum;
+            }
+        }
+        return sum_max;
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int[][] arr = new int[6][6];
+
+        for (int i = 0; i < 6; i++) {
+            String[] arrRowItems = scanner.nextLine().split(" ");
+            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+            for (int j = 0; j < 6; j++) {
+                int arrItem = Integer.parseInt(arrRowItems[j]);
+                arr[i][j] = arrItem;
+            }
+        }
+
+        int result = hourglassSum(arr);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
